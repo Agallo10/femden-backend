@@ -22,6 +22,12 @@ app.use(express.json());
 //rutas
 app.use('/api/cuentas', require('./routes/cuentas'));
 app.use('/api/login', require('./routes/auth'));
+app.use('/api/personas', require('./routes/personas'));
+app.use('/api/denuncias', require('./routes/denuncias'));
+app.use('/api/estado-denuncias', require('./routes/estado-denuncias'));
+app.use('/api/tipo-denuncias', require('./routes/tipo-denuncias'));
+app.use('/api/tipo-entidad', require('./routes/tipo-entidades'));
+app.use('/api/tipo-documentos', require('./routes/tipo-documentos'));
 
 
 

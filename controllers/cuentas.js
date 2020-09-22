@@ -26,7 +26,6 @@ const crearCuenta = async (req, res = response) => {
                 ok: false,
                 msg: 'El correo ya esta registrado'
             });
-
         }
 
         const cuenta = new Cuenta(req.body);
@@ -126,7 +125,7 @@ const borrarCuenta = async (req, res = response) => {
 
         res.json({
             ok: true,
-            msg: 'Cuenta borrada'
+            cuenta: cuentaBorrada
         });
 
     } catch (error) {

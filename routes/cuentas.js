@@ -1,3 +1,8 @@
+/*
+    Cuentas
+    '/api/cuentas'
+*/
+
 const { Router } = require('express');
 const { getCuentas, crearCuenta, actualizarCuenta, borrarCuenta } = require('../controllers/cuentas');
 const { check } = require('express-validator');
