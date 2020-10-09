@@ -23,6 +23,10 @@ const CuentaSchema = Schema({
         type: Boolean,
         default: false,
     },
+
+    imagen:{
+        type: String,
+    }
 });
 
 CuentaSchema.method('toJSON', function(){

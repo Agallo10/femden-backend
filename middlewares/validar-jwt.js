@@ -31,8 +31,6 @@ const validarJWT = (req, res, next) =>{
         
     }
 
-    console.log(token);
-
 }
 
 module.exports={

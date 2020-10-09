@@ -9,7 +9,7 @@ const getCuentas = async (req, res) => {
     res.json({
         ok: true,
         cuentas,
-    })
+    });
 }
 
 const crearCuenta = async (req, res = response) => {
