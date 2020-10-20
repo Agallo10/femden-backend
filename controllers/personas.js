@@ -4,12 +4,21 @@ const Persona = require('../models/persona')
 
 const getPersonas = async(req, res = response) => {
 
-    const personas = await Persona.find();
+    const desde = Number(req.query.desde) || 0;
 
+    const [personas, total] = await Promise.all([
+
+        Persona.find().populate('persona','nombre')
+                                    .skip(desde)
+                                    .limit(5),
+
+        Persona.countDocuments()
+    ]);
 
     res.json({
         ok: true,
-        personas
+        personas,
+        total
     });
 }
 const crearPersonas = async (req, res = response) => {

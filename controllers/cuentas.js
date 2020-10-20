@@ -5,10 +5,21 @@ const { generarJWT } = require('../helpers/jwt');
 
 const getCuentas = async (req, res) => {
 
-    const cuentas = await Cuenta.find()
+    const desde = Number(req.query.desde) || 0;
+
+    const [cuentas, total] = await Promise.all([
+
+        Cuenta.find().populate('cuenta','nombre')
+                                    .skip(desde)
+                                    .limit(5),
+
+        Cuenta.countDocuments()
+    ]);
+
     res.json({
         ok: true,
         cuentas,
+        total
     });
 }
 
@@ -91,7 +102,7 @@ const actualizarCuenta = async (req, res=response) => {
 
         res.json({
             ok: true,
-            usuario: cuentaActualizada
+            cuenta: cuentaActualizada
         });
 
     } catch (error) {

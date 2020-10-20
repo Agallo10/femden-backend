@@ -16,6 +16,12 @@ const DenunciaSchema = Schema({
         required: true
     },
 
+    tipo:{
+        type: Schema.Types.ObjectId,
+        ref: 'TipoDenuncia',
+        required: true
+    },
+
     estado:{
         type: String,
         required: true

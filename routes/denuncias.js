@@ -18,7 +18,7 @@ const{
 const router = Router();
 
 //get
-router.get('/' ,getDenuncias);
+router.get('/' ,validarJWT, getDenuncias);
 
 //Post
 router.post('/',

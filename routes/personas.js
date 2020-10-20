@@ -18,7 +18,7 @@ const{
 const router = Router();
 
 //get
-router.get('/' ,getPersonas);
+router.get('/' ,validarJWT, getPersonas);
 
 //Post
 router.post('/',

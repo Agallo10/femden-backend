@@ -17,7 +17,7 @@ const getDenuncias = async(req, res = response)=> {
 
     const [denuncias, total] = await Promise.all([
 
-        Denuncia.find().populate('persona','nombre')
+        Denuncia.find().populate('persona').populate('tipo')
                                     .skip(desde)
                                     .limit(5),
 

@@ -1,16 +1,19 @@
 const { response } = require('express');
 const Denuncia = require('../models/denuncia');
 const Persona = require('../models/persona');
+const Cuenta = require('../models/cuenta');
+const denuncia = require('../models/denuncia');
 
 const getTodo = async (req, res = response) => {
 
     const busqueda = req.params.busqueda;
     const regex = new RegExp(busqueda, 'i');
 
-    const [denuncias, personas] = await Promise.all([
+    const [denuncias, personas, cuentas] = await Promise.all([
 
-        Denuncia.find({texto: regex}),
-        Persona.find({nombre: regex})
+        Denuncia.find({tipo: regex}),
+        Persona.find({nombre: regex}),
+        Cuenta.find({nombre: regex})
 
     ]);
 
@@ -18,7 +21,8 @@ const getTodo = async (req, res = response) => {
         ok: true,
         msg: 'Busqueta total',
         denuncias,
-        personas
+        personas,
+        cuentas
     });
 }
 
@@ -35,13 +39,17 @@ const getDocumentosColeccion = async (req, res = response) => {
             break;
     
         case 'denuncias':
-            data = await Denuncia.find({texto: regex}).populate('persona', 'nombre');
+            data = await Denuncia.find({tipo: regex}).populate('tipo');
+            break;
+
+        case 'cuentas':
+            data = await Cuenta.find({nombre: regex}).populate(' cuenta', 'nombre');
             break;
     
         default:
             return res.status(400).json({
                 ok: false,
-                msg: 'La tabla tiene que ser personas/denuncias'
+                msg: 'La tabla tiene que ser personas/denuncias/cuentas'
             });
            
     }

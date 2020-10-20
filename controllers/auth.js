@@ -52,11 +52,20 @@ const renewToken = async(req, res = response)=>{
 
     const uid =req.uid;
 
-    const token = await generarJWT(uid);
+
+    const [token, cuenta] = await Promise.all([
+
+        generarJWT(uid),
+        Cuenta.findById(uid)
+
+    ]);
+
+    //Usuario por uid
 
     res.json({
         ok:true,
-        token
+        token,
+        cuenta
     })
 
 }
