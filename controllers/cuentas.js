@@ -1,7 +1,9 @@
 const Cuenta = require('../models/cuenta');
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
+
 const { generarJWT } = require('../helpers/jwt');
+const { enviarEmail } = require('../helpers/nodeMailer');
 
 const getCuentas = async (req, res) => {
 
@@ -9,7 +11,7 @@ const getCuentas = async (req, res) => {
 
     const [cuentas, total] = await Promise.all([
 
-        Cuenta.find().populate('cuenta','nombre')
+        Cuenta.find().populate('cuenta','nombre').populate('rol')
                                     .skip(desde)
                                     .limit(5),
 
@@ -47,6 +49,7 @@ const crearCuenta = async (req, res = response) => {
 
         //guardar usuario
         await cuenta.save();
+        enviarEmail(req, res, 'femden',email,'cuenta creada', `su cuenta ${email} ha sido creada`);
 
         //generar el token - JWT
         const token = await generarJWT(cuenta.id)

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const Cuenta = require('../models/cuenta');
 
 
 const validarJWT = (req, res, next) =>{
@@ -31,8 +32,45 @@ const validarJWT = (req, res, next) =>{
         
     }
 
+
 }
 
+const validarAdminRol = async (req, res, next) =>{
+
+    const uid = req.uid;
+
+    try {
+
+        const cuentaDB = await Cuenta.findById(uid);
+
+        const rolString = String(cuentaDB.rol);
+
+        if (!cuentaDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'La cuenta es inexistente'
+            });
+        }
+
+        if (rolString !== '5f9738ae40cb934fbccd96d6') {
+            return res.status(403).json({
+                ok: false,
+                msg: 'No tiene privilegios para hacer eso'
+            });
+        }
+
+        next();
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'hable con el admin papi'
+        });
+    }
+  }
+
 module.exports={
-    validarJWT
+    validarJWT,
+    validarAdminRol
 }

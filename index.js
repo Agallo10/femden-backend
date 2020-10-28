@@ -31,6 +31,7 @@ app.use('/api/tipo-documentos', require('./routes/tipo-documentos'));
 app.use('/api/total', require('./routes/busquedas'));
 app.use('/api/entidades', require('./routes/entidades'));
 app.use('/api/uploads', require('./routes/uploads'));
+app.use('/api/roles', require('./routes/roles'));
 
 
 

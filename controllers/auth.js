@@ -2,6 +2,7 @@ const { response } = require('express');
 const Cuenta = require('../models/cuenta');
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
+const { getMenuFrontEnd } = require('../helpers/menu-frontend');
 
 
 const login = async (req, res = response) => {
@@ -10,6 +11,7 @@ const login = async (req, res = response) => {
 
     try {
         const cuentaDB =  await Cuenta.findOne({ email });
+        
 
         //verificar email 
         if (!cuentaDB) {
@@ -36,10 +38,15 @@ const login = async (req, res = response) => {
         //generar el token - JWT
         const token = await generarJWT(cuentaDB.id);
 
+        const rolString = String(cuentaDB.rol);
+
+
         res.json({
             ok: true,
-            token
-        })
+            token,
+            menu: getMenuFrontEnd(rolString)
+        });
+
     } catch (error) {
         res(500).json({
             ok: false,
@@ -60,12 +67,15 @@ const renewToken = async(req, res = response)=>{
 
     ]);
 
+    const rolString = String(cuenta.rol);
+
     //Usuario por uid
 
     res.json({
         ok:true,
         token,
-        cuenta
+        cuenta,
+        menu: getMenuFrontEnd(rolString)
     })
 
 }

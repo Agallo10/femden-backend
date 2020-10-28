@@ -7,12 +7,12 @@ const { Router } = require('express');
 const { getCuentas, crearCuenta, actualizarCuenta, borrarCuenta } = require('../controllers/cuentas');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { validarJWT } = require('../middlewares/validar-jwt');
+const { validarJWT, validarAdminRol } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
 //get
-router.get('/', validarJWT ,getCuentas);
+router.get('/', validarJWT,validarAdminRol ,getCuentas);
 
 //Post
 router.post('/',
@@ -38,7 +38,7 @@ router.put('/:id',
     actualizarCuenta
 );
 
-router.delete('/:id',validarJWT ,borrarCuenta);
+router.delete('/:id',validarJWT,validarAdminRol ,borrarCuenta);
 
 
 module.exports = router; 

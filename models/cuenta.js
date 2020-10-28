@@ -16,8 +16,9 @@ const CuentaSchema = Schema({
         required:true
     },
     rol:{
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Rol',
+        required: true
     },
     google:{
         type: Boolean,

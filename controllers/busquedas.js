@@ -2,7 +2,6 @@ const { response } = require('express');
 const Denuncia = require('../models/denuncia');
 const Persona = require('../models/persona');
 const Cuenta = require('../models/cuenta');
-const denuncia = require('../models/denuncia');
 
 const getTodo = async (req, res = response) => {
 
@@ -32,14 +31,19 @@ const getDocumentosColeccion = async (req, res = response) => {
     const busqueda = req.params.busqueda;
     const regex = new RegExp(busqueda, 'i');
     let data = [];
+    
+
 
     switch (tabla) {
+
+        
         case 'personas':
             data = await Persona.find({nombre: regex});
             break;
     
         case 'denuncias':
-            data = await Denuncia.find({tipo: regex}).populate('tipo');
+            
+            data = await Denuncia.find({texto:regex});
             break;
 
         case 'cuentas':
