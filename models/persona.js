@@ -20,10 +20,7 @@ const PersonaSchema = Schema({
         type: Number,
         required:true
     },
-    rol:{
-        type: String,
-        required: true,
-    },
+    
     direccion:{
         type: String,
         required:true,
