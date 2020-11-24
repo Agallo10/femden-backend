@@ -1,5 +1,7 @@
 const { response } = require('express');
-const Persona = require('../models/persona')
+const Persona = require('../models/persona');
+const { generarJWT } = require('../helpers/jwt');
+
 
 
 const getPersonas = async(req, res = response) => {
@@ -29,8 +31,11 @@ const crearPersonas = async (req, res = response) => {
 
        const personaDB = await persona.save();
 
+       const token = await generarJWT(personaDB.id);
+
        res.status(200).json({
         ok: true,
+        token,
         personaDB
     });
 

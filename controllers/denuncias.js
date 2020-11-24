@@ -31,13 +31,38 @@ const getDenuncias = async(req, res = response)=> {
         total
     });
 }
+
+const getDenunciasPersonas = async(req, res = response)=> {
+
+    const uid = req.params.id;
+
+    const [denuncias, total] = await Promise.all([
+
+        Denuncia.find({persona: uid}).populate('tipo'),
+
+        Denuncia.find({persona: uid}).countDocuments()
+    ]);
+
+    res.json({
+        ok: true,
+        denuncias,
+        total
+    });
+}
+
+
 const crearDenuncias = async(req, res = response)=> {
 
-    //const uid= req.uid;
+    const fecha= Date.now();
+
     const denuncia = new Denuncia(req.body);
     
 
     try {
+
+        if (denuncia.fecha == null) {
+            denuncia.fecha = fecha;            
+        }
 
         const denunciaDB = await denuncia.save();
 
@@ -74,5 +99,6 @@ module.exports ={
     getDenuncias,
     crearDenuncias,
     actualizarDenuncias,
-    borrarDenuncias
+    borrarDenuncias,
+    getDenunciasPersonas
 }

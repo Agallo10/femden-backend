@@ -7,7 +7,7 @@ const DenunciaSchema = Schema({
         required: true,
     },
     fecha:{
-        type: String,
+        type: Date,
         required: true,
     },
     persona:{

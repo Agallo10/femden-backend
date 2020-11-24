@@ -1,6 +1,5 @@
 const { response } = require('express');
 const Persona = require('../models/persona');
-const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 
 
@@ -62,7 +61,6 @@ const renewToken = async(req, res = response)=>{
         Persona.findById(uid)
 
     ]);
-
 
     //Usuario por uid
 

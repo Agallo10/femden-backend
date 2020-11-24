@@ -12,13 +12,16 @@ const{
     getDenuncias,
     crearDenuncias,
     actualizarDenuncias,
-    borrarDenuncias
+    borrarDenuncias,
+    getDenunciasPersonas
 } = require('../controllers/denuncias')
 
 const router = Router();
 
 //get
 router.get('/' ,validarJWT, getDenuncias);
+
+router.get('/:id' ,validarJWT, getDenunciasPersonas);
 
 //Post
 router.post('/',
