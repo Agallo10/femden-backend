@@ -8,6 +8,11 @@ const EstadoDenunciaSchema = Schema({
         unique: true
     },
     
+    porcentaje:{
+        type: Number,
+        required: true,
+        unique: true
+    },
 });
 
 EstadoDenunciaSchema.method('toJSON', function(){

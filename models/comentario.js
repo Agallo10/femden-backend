@@ -1,8 +1,8 @@
 const {Schema, model} = require('mongoose');
 
-const DenunciaSchema = Schema({
+const ComentsrioSchema = Schema({
 
-    texto:{
+    comentario:{
         type: String,
         required: true,
     },
@@ -10,28 +10,22 @@ const DenunciaSchema = Schema({
         type: String,
         required: true,
     },
-    persona:{
+
+    cuenta:{
         type: Schema.Types.ObjectId,
-        ref: 'Persona',
+        ref: 'Cuenta',
         required: true
     },
 
-    tipo:{
+    denuncia:{
         type: Schema.Types.ObjectId,
-        ref: 'TipoDenuncia',
+        ref: 'Denuncia',
         required: true
     },
-
-    estado:{
-        type: Schema.Types.ObjectId,
-        ref: 'EstadoDenuncia',
-        required: true
-    }
-
-
+    
 });
 
-DenunciaSchema.method('toJSON', function(){
+ComentsrioSchema.method('toJSON', function(){
 
     const {__v, _id, ...object} = this.toObject();
 
@@ -40,4 +34,4 @@ DenunciaSchema.method('toJSON', function(){
 
 })
 
-module.exports = model('Denuncia', DenunciaSchema); 
+module.exports = model('Comentario', ComentsrioSchema); 

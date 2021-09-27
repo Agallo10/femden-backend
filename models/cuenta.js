@@ -6,6 +6,19 @@ const CuentaSchema = Schema({
         type: String,
         required: true,
     },
+    nombreEncargado:{
+        type: String,
+        required: true,
+    },
+    
+    documento:{
+        type: String,
+        required: true,
+    },
+    cargo:{
+        type: String,
+        required: true,
+    },
     email:{
         type: String,
         required: true,
@@ -27,7 +40,13 @@ const CuentaSchema = Schema({
 
     imagen:{
         type: String,
-    }
+    },
+
+    tipoEntidad:{
+        type: Schema.Types.ObjectId,
+        ref: 'TipoEntidad',
+        required: true
+    },
 });
 
 CuentaSchema.method('toJSON', function(){

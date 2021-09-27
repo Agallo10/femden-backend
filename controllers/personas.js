@@ -23,15 +23,27 @@ const getPersonas = async(req, res = response) => {
         total
     });
 }
+
 const crearPersonas = async (req, res = response) => {
 
     const persona = new Persona(req.body);
 
     try {
 
+        
+        if (persona.edad <18) {
+            res.status(401).json({
+                ok: false,
+                msg: 'Debe ser mayor de 18 años, comuniquese con la linea de atención 141 del bienestar familiar'
+            })
+               
+        }
+
        const personaDB = await persona.save();
 
        const token = await generarJWT(personaDB.id);
+
+       
 
        res.status(200).json({
         ok: true,
@@ -43,9 +55,37 @@ const crearPersonas = async (req, res = response) => {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Error inesperado'
+            msg: 'El documento o el email ya estan registrados'
         })
     }
+}
+
+
+const getPersona = async (req, res = response) => {
+
+    const uid = req.params.id;
+
+    try {
+        const persona = await Persona.findById(uid)
+            .populate('nombre')
+            .populate('documento')
+            .populate('telefono')
+            .populate('direccion')
+            .populate('email');
+
+        res.json({
+            ok: true,
+            persona
+        });
+    } catch (error) {
+        console.log(error);
+        res.json({
+            ok: true,
+            msg: 'Hable con el admin'
+        });
+    }
+
+
 }
 const actualizarPersonas = (req, res = response) => {
 
@@ -54,16 +94,33 @@ const actualizarPersonas = (req, res = response) => {
         msg: "actualizarPersonas"
     });
 }
-const borrarPersonas = (req, res = response) => {
 
-    res.json({
-        ok: true,
-        msg: "borrarPersonas "
-    });
+
+const borrarPersonas = async(req, res = response) => {
+
+    const uid = req.params.id;
+
+    try {
+
+        const personaBorrada = await Persona.findByIdAndDelete(uid);
+
+        res.json({
+            ok: true,
+            cuenta: personaBorrada
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        });
+    }
 }
 
 module.exports = {
     getPersonas,
+    getPersona,
     crearPersonas,
     actualizarPersonas,
     borrarPersonas

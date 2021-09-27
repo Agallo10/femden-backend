@@ -11,7 +11,7 @@ const getCuentas = async (req, res) => {
 
     const [cuentas, total] = await Promise.all([
 
-        Cuenta.find().populate('cuenta','nombre').populate('rol')
+        Cuenta.find().populate('cuenta','nombre').populate('rol').populate('tipoEntidad')
                                     .skip(desde)
                                     .limit(5),
 
@@ -25,9 +25,108 @@ const getCuentas = async (req, res) => {
     });
 }
 
+const getCuenasTipo = async (req, res = response) => {
+
+    const desde = Number(req.query.desde) || 0;
+
+    const uid = req.params.id;
+
+    if (uid == "5f699befedf61a95472b451b") {
+
+        const [cuentas, total] = await Promise.all([
+
+            Cuenta.find({
+                tipoEntidad: {
+                    $in: ['5f699befedf61a95472b451b']
+                }
+            })
+            .populate('cuenta','nombre').populate('rol').populate('tipoEntidad')
+            .skip(desde)
+            .limit(5),
+
+                Cuenta.find({ tipoEntidad: uid }).countDocuments()
+        ]);
+
+        res.json({
+            ok: true,
+            cuentas,
+            total
+        });
+    }
+
+    if (uid == "5f699c2eedf61a95472b451c") {
+
+        const [cuentas, total] = await Promise.all([
+
+            Cuenta.find({
+                tipoEntidad: {
+                    $in: ['5f699c2eedf61a95472b451c']
+                }
+            })
+            .populate('cuenta','nombre').populate('rol').populate('tipoEntidad')
+            .skip(desde)
+            .limit(5),
+
+                Cuenta.find({ tipoEntidad: uid }).countDocuments()
+        ]);
+
+        res.json({
+            ok: true,
+            cuentas,
+            total
+        });
+    }
+
+    if (uid == "60255249364b7844ae8b660c") {
+
+        const [cuentas, total] = await Promise.all([
+
+            Cuenta.find({
+                tipoEntidad: {
+                    $in: ['60255249364b7844ae8b660c']
+                }
+            })
+            .populate('cuenta','nombre').populate('rol').populate('tipoEntidad')
+            .skip(desde)
+            .limit(5),
+
+                Cuenta.find({ tipoEntidad: uid }).countDocuments()
+        ]);
+
+        res.json({
+            ok: true,
+            cuentas,
+            total
+        });
+    }
+
+    else {
+
+        const [cuentas, total] = await Promise.all([
+
+            Cuenta.find().populate('cuenta','nombre').populate('rol').populate('tipoEntidad')
+                                        .skip(desde)
+                                        .limit(5),
+    
+            Cuenta.countDocuments()
+        ]);
+    
+        res.json({
+            ok: true,
+            cuentas,
+            total
+        });
+
+    }
+
+
+}
+
 const crearCuenta = async (req, res = response) => {
 
     const { email, password, } = req.body;
+
+    const uid = req.params.id; 
 
     try {
 
@@ -42,6 +141,14 @@ const crearCuenta = async (req, res = response) => {
         }
 
         const cuenta = new Cuenta(req.body);
+
+
+        //const tipoEntidadDB = await Cuenta.findOne({tipoEntidad});
+
+        if (uid != '5f97389f40cb934fbccd96d5') {
+            
+            cuenta.tipoEntidad = uid;
+        }
 
         //encriptar contraseña
         const salt = bcrypt.genSaltSync();
@@ -153,6 +260,7 @@ const borrarCuenta = async (req, res = response) => {
 
 module.exports = {
     getCuentas,
+    getCuenasTipo,
     crearCuenta,
     actualizarCuenta,
     borrarCuenta

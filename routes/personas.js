@@ -10,6 +10,7 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 
 const{
     getPersonas,
+    getPersona,
     crearPersonas,
     actualizarPersonas,
     borrarPersonas
@@ -19,6 +20,8 @@ const router = Router();
 
 //get
 router.get('/' ,validarJWT, getPersonas);
+
+router.get('/:id' ,validarJWT, getPersona);
 
 //Post
 router.post('/',

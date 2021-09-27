@@ -40,10 +40,12 @@ const login = async (req, res = response) => {
 
         const rolString = String(cuentaDB.rol);
 
-
+        const tipoC= cuentaDB.tipoEntidad;
+   
         res.json({
             ok: true,
             token,
+            tipoEntidad: tipoC,
             menu: getMenuFrontEnd(rolString)
         });
 
@@ -69,12 +71,15 @@ const renewToken = async(req, res = response)=>{
 
     const rolString = String(cuenta.rol);
 
+    const tipoC= cuenta.tipoEntidad;
+
     //Usuario por uid
 
     res.json({
         ok:true,
         token,
         cuenta,
+        tipoEntidad: tipoC,
         menu: getMenuFrontEnd(rolString)
     })
 

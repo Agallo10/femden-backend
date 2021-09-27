@@ -25,6 +25,19 @@ const PersonaSchema = Schema({
         type: String,
         required:true,
     },
+
+
+    fechaNacimiento:{
+        type: String,
+        required:true,
+    },
+
+    edad:{
+        type: Number,
+        required:true,
+    },
+
+   
 });
 
 PersonaSchema.method('toJSON', function(){

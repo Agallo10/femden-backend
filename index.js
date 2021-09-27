@@ -33,6 +33,7 @@ app.use('/api/total', require('./routes/busquedas'));
 app.use('/api/entidades', require('./routes/entidades'));
 app.use('/api/uploads', require('./routes/uploads'));
 app.use('/api/roles', require('./routes/roles'));
+app.use('/api/comentarios', require('./routes/comentarios'));
 
 
 

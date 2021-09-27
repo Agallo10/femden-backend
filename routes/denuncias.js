@@ -13,7 +13,10 @@ const{
     crearDenuncias,
     actualizarDenuncias,
     borrarDenuncias,
-    getDenunciasPersonas
+    getDenunciasPersonas,
+    getDenunciasUid,
+    getDenunciasTipo,
+    actualizarDenuncias2
 } = require('../controllers/denuncias')
 
 const router = Router();
@@ -23,6 +26,9 @@ router.get('/' ,validarJWT, getDenuncias);
 
 router.get('/:id' ,validarJWT, getDenunciasPersonas);
 
+router.get('/denuncia/:id' ,validarJWT, getDenunciasUid);
+
+router.get('/denuncia-tipo/:id' ,validarJWT, getDenunciasTipo);
 //Post
 router.post('/',
     [
@@ -35,8 +41,18 @@ router.post('/',
 );
 
 router.put('/:id',
-    [],
+    [
+        validarJWT,
+        
+    ],
     actualizarDenuncias
+);
+
+router.put('/finalizar/:id',
+    [
+        validarJWT,
+    ],
+    actualizarDenuncias2
 );
 
 router.delete('/:id' ,borrarDenuncias);
