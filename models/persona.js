@@ -35,6 +35,7 @@ const PersonaSchema = Schema({
     edad:{
         type: Number,
         required:true,
+        min: [18, 'Muy poca edad'],
     },
 
    
