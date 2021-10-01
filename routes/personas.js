@@ -29,7 +29,7 @@ router.post('/',
         check('nombre','el nombre de la persona es necesario').not().isEmpty(),
         check('telefono','el telefono de la persona es necesario').not().isEmpty(),
         check('documento','el documento de la persona es necesario').not().isEmpty(),
-        check('email','el email de la persona es necesario').not().isEmpty(),
+        check('email','el email de la persona es necesario').isEmail(),
         check('direccion','la direccion de la persona es necesaria').not().isEmpty(),
         validarCampos
     ],
