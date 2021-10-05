@@ -10,7 +10,7 @@ const getTodo = async (req, res = response) => {
 
     const [denuncias, personas, cuentas] = await Promise.all([
 
-        Denuncia.find({tipo: regex}),
+        Denuncia.find({autor: regex}),
         Persona.find({nombre: regex}),
         Cuenta.find({nombre: regex})
 
@@ -43,7 +43,7 @@ const getDocumentosColeccion = async (req, res = response) => {
     
         case 'denuncias':
             
-            data = await Denuncia.find({texto:regex});
+            data = await Denuncia.find({autor:regex});
             break;
 
         case 'cuentas':

@@ -1,6 +1,5 @@
 const { response } = require('express');
 const Denuncia = require('../models/denuncia');
-const Persona = require('../models/persona');
 
 
 
