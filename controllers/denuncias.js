@@ -1,5 +1,6 @@
 const { response } = require('express');
-const Denuncia = require('../models/denuncia')
+const Denuncia = require('../models/denuncia');
+const Persona = require('../models/persona');
 
 
 
@@ -234,7 +235,6 @@ const crearDenuncias = async (req, res = response) => {
 
     const denuncia = new Denuncia(req.body);
 
-
     try {
 
         if (denuncia.fecha == null) {
@@ -245,6 +245,10 @@ const crearDenuncias = async (req, res = response) => {
             denuncia.estado = estado;
         }
 
+        if (denuncia.autor == null) {
+            denuncia.autor = 'No se ha puesto el autor';
+        }
+        
         const denunciaDB = await denuncia.save();
 
         res.status(200).json({

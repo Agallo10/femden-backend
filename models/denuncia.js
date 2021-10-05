@@ -6,6 +6,12 @@ const DenunciaSchema = Schema({
         type: String,
         required: true,
     },
+
+    autor:{
+        type: String,
+        required: true,
+    },
+
     fecha:{
         type: String,
         required: true,
