@@ -12,7 +12,7 @@ const getTodo = async (req, res = response) => {
 
         Denuncia.find({autor: regex}),
         Persona.find({nombre: regex}),
-        Cuenta.find({nombre: regex})
+        Cuenta.find({nombreEncargado: regex})
 
     ]);
 
@@ -43,11 +43,11 @@ const getDocumentosColeccion = async (req, res = response) => {
     
         case 'denuncias':
             
-            data = await Denuncia.find({autor:regex});
+            data = await Denuncia.find({autor: regex});
             break;
 
         case 'cuentas':
-            data = await Cuenta.find({nombre: regex}).populate(' cuenta', 'nombre');
+            data = await Cuenta.find({nombreEncargado: regex});
             break;
     
         default:

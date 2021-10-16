@@ -16,7 +16,8 @@ const{
     getDenunciasPersonas,
     getDenunciasUid,
     getDenunciasTipo,
-    actualizarDenuncias2
+    actualizarDenuncias2,
+    agregarNumeroRadicado
 } = require('../controllers/denuncias')
 
 const router = Router();
@@ -53,6 +54,13 @@ router.put('/finalizar/:id',
         validarJWT,
     ],
     actualizarDenuncias2
+);
+
+router.put('/radicar/:id',
+    [
+        validarJWT,
+    ],
+    agregarNumeroRadicado
 );
 
 router.delete('/:id' ,borrarDenuncias);

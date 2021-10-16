@@ -38,7 +38,7 @@ const getDenunciasPersonas = async (req, res = response) => {
 
     const [denunciasSeg, denunciasFis, denunciasFin, total] = await Promise.all([
 
-        Denuncia.find({ 
+        Denuncia.find({
             persona: uid,
             estado: { $in: ["5f696f27a339288e287dd956"] }
         })
@@ -247,7 +247,11 @@ const crearDenuncias = async (req, res = response) => {
         if (denuncia.autor == null) {
             denuncia.autor = 'No se ha puesto el autor';
         }
-        
+
+        if (denuncia.numeroRadicado == null) {
+            denuncia.numeroRadicado = 0;
+        }
+
         const denunciaDB = await denuncia.save();
 
         res.status(200).json({
@@ -331,6 +335,44 @@ const actualizarDenuncias2 = async (req, res = response) => {
     }
 
 }
+
+const agregarNumeroRadicado = async (req, res = response) => {
+
+    const uid = req.params.id;
+
+    try {
+
+        const denunciaDB = await Denuncia.findById(uid);
+
+        if (!denunciaDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe una denuncia con este id'
+            });
+        }
+
+        const numeroRadicado = req.body;
+
+        const denunciaActualizada = await Denuncia.findByIdAndUpdate(uid, numeroRadicado, { new: true });
+
+        console.log('se actualizo');
+        console.log(denunciaActualizada.numeroRadicado);
+
+        res.json({
+            ok: true,
+            msj: "Se actualizo la denuncia",
+            denuncia: denunciaActualizada
+        });
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        });
+
+    }
+}
 const borrarDenuncias = (req, res = response) => {
 
     res.json({
@@ -347,5 +389,6 @@ module.exports = {
     borrarDenuncias,
     getDenunciasPersonas,
     getDenunciasUid,
-    getDenunciasTipo
+    getDenunciasTipo,
+    agregarNumeroRadicado
 }

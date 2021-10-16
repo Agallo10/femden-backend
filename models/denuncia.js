@@ -1,49 +1,54 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const DenunciaSchema = Schema({
 
-    texto:{
+    texto: {
         type: String,
         required: true,
     },
 
-    autor:{
+    autor: {
         type: String,
         required: true,
     },
 
-    fecha:{
+    fecha: {
         type: String,
         required: true,
     },
-    persona:{
+    persona: {
         type: Schema.Types.ObjectId,
         ref: 'Persona',
         required: true
     },
 
-    tipo:{
+    tipo: {
         type: Schema.Types.ObjectId,
         ref: 'TipoDenuncia',
         required: true
     },
 
-    estado:{
+    estado: {
         type: Schema.Types.ObjectId,
         ref: 'EstadoDenuncia',
         required: true
+    },
+
+    numeroRadicado: {
+        type: Number,
+        required: true
     }
 
-
+    
 });
 
-DenunciaSchema.method('toJSON', function(){
+DenunciaSchema.method('toJSON', function () {
 
-    const {__v, _id, ...object} = this.toObject();
+    const { __v, _id, ...object } = this.toObject();
 
     object.uid = _id;
     return object;
 
 })
 
-module.exports = model('Denuncia', DenunciaSchema); 
+module.exports = model('Denuncia', DenunciaSchema);
